@@ -1,0 +1,45 @@
+﻿@page
+@model Cinematix3000.Pages.VenueMovies.EditModel
+
+@{
+    ViewData["Title"] = "Voorstelling '" + Model.VenueMovie.ID + "' aanpassen";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<h4>VenueMovie</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="VenueMovie.ID" />
+            <div class="form-group">
+                <label asp-for="VenueMovie.MovieID" class="control-label"></label>
+                <select asp-for="VenueMovie.MovieID" class="form-control" asp-items="ViewBag.MovieID"></select>
+                <span asp-validation-for="VenueMovie.MovieID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VenueMovie.VenueID" class="control-label"></label>
+                <select asp-for="VenueMovie.VenueID" class="form-control" asp-items="ViewBag.VenueID"></select>
+                <span asp-validation-for="VenueMovie.VenueID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VenueMovie.StartDateTime" class="control-label"></label>
+                <input asp-for="VenueMovie.StartDateTime" class="form-control" />
+                <span asp-validation-for="VenueMovie.StartDateTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Opslaan" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Ga terug</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

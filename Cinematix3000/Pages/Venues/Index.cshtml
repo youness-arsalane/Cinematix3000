@@ -1,0 +1,48 @@
+﻿@page
+@model Cinematix3000.Pages.Venues.IndexModel
+
+@{
+    ViewData["Title"] = "Zalen";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>
+    <a asp-page="Create">Nieuwe toevoegen</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Venues[0].Cinema)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Venues[0].Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Venues[0].Capacity)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Venues) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cinema.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Capacity)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.ID">Aanpassen</a> |
+                <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.ID">Verwijderen</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
