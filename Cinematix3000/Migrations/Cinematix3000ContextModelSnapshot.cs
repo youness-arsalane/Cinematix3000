@@ -113,6 +113,9 @@ namespace Cinematix3000.Migrations
                     b.Property<int>("SeatNumber")
                         .HasColumnType("int");
 
+                    b.Property<int>("UserName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("VenueMovieID")
                         .HasColumnType("int");
 

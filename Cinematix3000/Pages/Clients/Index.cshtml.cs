@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Cinematix3000.Data;
 using Cinematix3000.Models;
 
-namespace Cinematix3000.Pages.Reservations
+namespace Cinematix3000.Pages.Clients
 {
     public class IndexModel : PageModel
     {
@@ -19,15 +19,13 @@ namespace Cinematix3000.Pages.Reservations
             _context = context;
         }
 
-        public IList<Reservation> Reservation { get;set; }
+        public IList<Client> Client { get;set; }
 
         public async Task OnGetAsync()
         {
-            Reservation = await _context.Reservations
-                .Include(r => r.Client)
-                .Include(r => r.VenueMovie)
-                .Include(r => r.VenueMovie.Venue)
-                .Include(r => r.VenueMovie.Movie).ToListAsync();
+            Client = await _context.Clients
+                .Include(v => v.Reservations)
+                .ToListAsync();
         }
     }
 }

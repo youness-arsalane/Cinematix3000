@@ -10,6 +10,7 @@ namespace Cinematix3000.Models
         public int ID { get; set; }
 
         [Required]
+        [Display(Name = "Bioscoop")]
         public int CinemaID { get; set; }
 
         [Display(Name = "Bioscoop")]

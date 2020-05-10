@@ -2,14 +2,13 @@
 @model Cinematix3000.Pages.Reservations.DetailsModel
 
 @{
-    ViewData["Title"] = "Details";
-    Layout = "~/Pages/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Reservering '" + Model.Reservation.ID + "'";
 }
 
-<h1>Details</h1>
+<h1>@ViewData["Title"]</h1>
+
 
 <div>
-    <h4>Reservation</h4>
     <hr />
     <div class="row">
         <div class="col-sm-8">
@@ -36,13 +35,13 @@
                     @Html.DisplayNameFor(model => model.Reservation.Price)
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Reservation.Price)
+                    &euro; @Html.DisplayFor(model => model.Reservation.Price)
                 </dd>
             </dl>
         </div>
         <div class="col-sm-4">
             <div class="row">
-                <img src="https://kreuze.nl/wp-content/uploads/2019/08/QR-code.jpeg" alt="QR_CODE" />
+                <img src="https://store-images.s-microsoft.com/image/apps.33967.13510798887182917.246b0a3d-c3cc-46fc-9cea-021069d15c09.392bf5f5-ade4-4b36-aa63-bb15d5c3817a?mode=scale&q=90&h=270&w=270&background=%230078D7" alt="QR_CODE" />
 
             </div>
         </div>

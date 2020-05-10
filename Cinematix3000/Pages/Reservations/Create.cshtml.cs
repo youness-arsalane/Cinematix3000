@@ -7,22 +7,55 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Cinematix3000.Data;
 using Cinematix3000.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace Cinematix3000.Pages.Reservations
 {
     public class CreateModel : PageModel
     {
         private readonly Cinematix3000.Data.Cinematix3000Context _context;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public CreateModel(Cinematix3000.Data.Cinematix3000Context context)
+        public CreateModel(
+            UserManager<IdentityUser> userManager, 
+            Cinematix3000.Data.Cinematix3000Context context)
         {
+            _userManager = userManager;
             _context = context;
         }
 
         public IActionResult OnGet()
         {
-        ViewData["ClientID"] = new SelectList(_context.Clients, "ID", "FirstName");
-        ViewData["VenueMovieID"] = new SelectList(_context.VenueMovies, "ID", "ID");
+            List<Client> clients = _context.Clients.ToList();
+            List<object> newClients = new List<object>();
+            foreach (Client client in clients)
+            {
+                newClients.Add(new
+                {
+                    client.ID,
+                    ToString = client.ToString()
+                });
+            }
+
+            List<VenueMovie> venueMovies = _context.VenueMovies
+                .Include(v => v.Movie)
+                .Include(v => v.Venue).ToList();
+
+            List<object> newVenueMovies = new List<object>();
+            foreach (VenueMovie venueMovie in venueMovies)
+            {
+                newVenueMovies.Add(new
+                {
+                    venueMovie.ID,
+                    ToString = venueMovie.ToString()
+                });
+            }
+
+            ViewData["UserName"] = _userManager.GetUserName(User);
+            ViewData["ClientID"] = new SelectList(newClients, "ID", "ToString");
+            ViewData["VenueMovieID"] = new SelectList(newVenueMovies, "ID", "ToString");
+
             return Page();
         }
 

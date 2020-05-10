@@ -6,8 +6,6 @@
 }
 
 <h1>@ViewData["Title"]</h1>
-
-<h4>VenueMovie</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -16,12 +14,12 @@
             <input type="hidden" asp-for="VenueMovie.ID" />
             <div class="form-group">
                 <label asp-for="VenueMovie.MovieID" class="control-label"></label>
-                <select asp-for="VenueMovie.MovieID" class="form-control" asp-items="ViewBag.MovieID"></select>
+                @Html.DropDownList("VenueMovie.MovieID", (SelectList)ViewBag.MovieID, "- Maak een keuze -", new { @class = "form-control" })
                 <span asp-validation-for="VenueMovie.MovieID" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="VenueMovie.VenueID" class="control-label"></label>
-                <select asp-for="VenueMovie.VenueID" class="form-control" asp-items="ViewBag.VenueID"></select>
+                @Html.DropDownList("VenueMovie.VenueID", (SelectList)ViewBag.VenueID, "- Maak een keuze -", new { @class = "form-control" })
                 <span asp-validation-for="VenueMovie.VenueID" class="text-danger"></span>
             </div>
             <div class="form-group">

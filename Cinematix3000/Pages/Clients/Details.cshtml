@@ -1,0 +1,75 @@
+﻿@page
+@model Cinematix3000.Pages.Clients.DetailsModel
+
+@{
+    ViewData["Title"] = "Klant '" + Model.Client.ID + "'";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Client.FirstName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Client.FirstName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Client.LastName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Client.LastName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Client.BirthDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Client.BirthDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Client.Reservations)
+        </dt>
+        <dd class="col-sm-10">
+            <table class="table">
+                <tr>
+                    <th>Voorstelling</th>
+                    <th>Stoelnummer</th>
+                    <th>Prijs</th>
+                    <th>&nbsp;</th>
+                </tr>
+                @foreach (var item in Model.Client.Reservations)
+                {
+                    <tr>
+                        <td>
+                            <a asp-page="/VenueMovies/Details" asp-route-id="@item.VenueMovie.ID">
+                                @Html.DisplayFor(modelItem => item.VenueMovie.ID)
+                            </a>
+                            (Zaal: <a asp-page="/Venues/Details" asp-route-id="@item.VenueMovie.Venue.ID">@Html.DisplayFor(modelItem => item.VenueMovie.Venue.ID)</a>,
+                            Film: <a asp-page="/Movies/Details" asp-route-id="@item.VenueMovie.Movie.ID">@Html.DisplayFor(modelItem => item.VenueMovie.Movie.Title)</a>,
+                            @{
+                                string startDateTime = item.VenueMovie.StartDateTime.ToShortDateString() + " om " + item.VenueMovie.StartDateTime.ToShortTimeString();
+                            }
+                            Datum en tijd: @Html.DisplayFor(modelItem => startDateTime))
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SeatNumber)
+                        </td>
+                        <td>
+                            &euro; @Html.DisplayFor(modelItem => item.Price)
+                        </td>
+                        <td>
+                            <a asp-page="../Reservations/Details" asp-route-id="@item.ID">Bekijken</a>
+                        </td>
+                    </tr>
+                }
+            </table>
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.Client.ID">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

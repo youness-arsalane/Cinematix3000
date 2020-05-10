@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Cinematix3000.Data;
 using Cinematix3000.Models;
 
-namespace Cinematix3000.Pages.VenueMovies
+namespace Cinematix3000.Pages.Clients
 {
     public class EditModel : PageModel
     {
@@ -21,7 +21,7 @@ namespace Cinematix3000.Pages.VenueMovies
         }
 
         [BindProperty]
-        public VenueMovie VenueMovie { get; set; }
+        public Client Client { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -30,18 +30,12 @@ namespace Cinematix3000.Pages.VenueMovies
                 return NotFound();
             }
 
-            VenueMovie = await _context.VenueMovies
-                .Include(v => v.Movie)
-                .Include(v => v.Venue).FirstOrDefaultAsync(m => m.ID == id);
+            Client = await _context.Clients.FirstOrDefaultAsync(m => m.ID == id);
 
-            if (VenueMovie == null)
+            if (Client == null)
             {
                 return NotFound();
             }
-
-
-           ViewData["MovieID"] = new SelectList(_context.Movies, "ID", "Title");
-           ViewData["VenueID"] = new SelectList(_context.Venues, "ID", "Name");
             return Page();
         }
 
@@ -54,7 +48,7 @@ namespace Cinematix3000.Pages.VenueMovies
                 return Page();
             }
 
-            _context.Attach(VenueMovie).State = EntityState.Modified;
+            _context.Attach(Client).State = EntityState.Modified;
 
             try
             {
@@ -62,7 +56,7 @@ namespace Cinematix3000.Pages.VenueMovies
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!VenueMovieExists(VenueMovie.ID))
+                if (!ClientExists(Client.ID))
                 {
                     return NotFound();
                 }
@@ -75,9 +69,9 @@ namespace Cinematix3000.Pages.VenueMovies
             return RedirectToPage("./Index");
         }
 
-        private bool VenueMovieExists(int id)
+        private bool ClientExists(int id)
         {
-            return _context.VenueMovies.Any(e => e.ID == id);
+            return _context.Clients.Any(e => e.ID == id);
         }
     }
 }

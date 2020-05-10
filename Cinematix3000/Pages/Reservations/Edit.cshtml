@@ -2,13 +2,10 @@
 @model Cinematix3000.Pages.Reservations.EditModel
 
 @{
-    ViewData["Title"] = "Edit";
-    Layout = "~/Pages/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Reservering '" + Model.Reservation.ID + "' aanpassen";
 }
 
-<h1>Edit</h1>
-
-<h4>Reservation</h4>
+<h1>@ViewData["Title"]</h1>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -17,12 +14,12 @@
             <input type="hidden" asp-for="Reservation.ID" />
             <div class="form-group">
                 <label asp-for="Reservation.ClientID" class="control-label"></label>
-                <select asp-for="Reservation.ClientID" class="form-control" asp-items="ViewBag.ClientID"></select>
+                @Html.DropDownList("Reservation.ClientID", (SelectList)ViewBag.ClientID, "- Maak een keuze -", new { @class = "form-control" })
                 <span asp-validation-for="Reservation.ClientID" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Reservation.VenueMovieID" class="control-label"></label>
-                <select asp-for="Reservation.VenueMovieID" class="form-control" asp-items="ViewBag.VenueMovieID"></select>
+                @Html.DropDownList("Reservation.VenueMovieID", (SelectList)ViewBag.VenueMovieID, "- Maak een keuze -", new { @class = "form-control" })
                 <span asp-validation-for="Reservation.VenueMovieID" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -32,18 +29,28 @@
             </div>
             <div class="form-group">
                 <label asp-for="Reservation.Price" class="control-label"></label>
-                <input asp-for="Reservation.Price" class="form-control" />
-                <span asp-validation-for="Reservation.Price" class="text-danger"></span>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">&euro;</span>
+                    </div>
+                    <input asp-for="Reservation.Price" class="form-control" />
+                    <span asp-validation-for="Reservation.Price" class="text-danger"></span>
+                </div>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <label asp-for="Reservation.UserName" class="control-label"></label>
+                <input asp-for="Reservation.UserName" class="form-control" readonly="readonly" />
+                <span asp-validation-for="Reservation.UserName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Opslaan" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-page="./Index">Back to List</a>
+    <a asp-page="./Index">Ga terug</a>
 </div>
 
 @section Scripts {

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Cinematix3000.Data;
 using Cinematix3000.Models;
+using System.Globalization;
 
 namespace Cinematix3000.Pages.VenueMovies
 {
@@ -21,11 +22,32 @@ namespace Cinematix3000.Pages.VenueMovies
 
         public IList<VenueMovie> VenueMovies { get; set; }
 
-        public async Task OnGetAsync()
+        public async Task OnGetAsync(string? startDate = null, string? endDate = null)
         {
-            VenueMovies = await _context.VenueMovies
-                .Include(v => v.Movie)
-                .Include(v => v.Venue).ToListAsync();
+            ViewData["StartDate"] = startDate;
+            ViewData["EndDate"] = endDate;
+
+            if (startDate != null && endDate != null)
+            {
+                DateTime newStartDate = DateTime.ParseExact(startDate, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+                DateTime newEndDate = DateTime.ParseExact(endDate, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+
+                VenueMovies = await _context.VenueMovies
+                    .Include(v => v.Movie)
+                    .Include(v => v.Venue)
+                    .Include(v => v.Venue.Cinema)
+                    .Include(v => v.Reservations)
+                    .Where(v => v.StartDateTime > newStartDate && v.StartDateTime < newEndDate)
+                    .ToListAsync();
+            } else
+            {
+                VenueMovies = await _context.VenueMovies
+                    .Include(v => v.Movie)
+                    .Include(v => v.Venue)
+                    .Include(v => v.Venue.Cinema)
+                    .Include(v => v.Reservations)
+                    .ToListAsync();
+            }
         }
     }
 }

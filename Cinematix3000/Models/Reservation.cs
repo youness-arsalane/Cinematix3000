@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Cinematix3000.Models
 {
@@ -10,12 +8,14 @@ namespace Cinematix3000.Models
         public int ID { get; set; }
 
         [Required]
+        [Display(Name = "Klant")] 
         public int ClientID { get; set; }
 
         [Display(Name = "Klant")]
         public Client Client { get; set; }
 
         [Required]
+        [Display(Name = "Voorstelling")]
         public int VenueMovieID { get; set; }
 
         [Display(Name = "Voorstelling")]
@@ -25,14 +25,11 @@ namespace Cinematix3000.Models
         [Display(Name = "Stoelnummer")]
         public int SeatNumber { get; set; }
 
-        [Required]
         [Display(Name = "Prijs")]
         public double Price { get; set; }
 
-        //[Required]
-        //public string ApplicationUserID { get; set; }
-
-        //[Display(Name = "Geholpen door")]
-        //public ApplicationUser ApplicationUser { get; set; }
+        [Required]
+        [Display(Name = "Geholpen door")]
+        public string UserName { get; set; }
     }
 }

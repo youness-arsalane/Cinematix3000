@@ -7,9 +7,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Cinematix3000.Data;
 using Cinematix3000.Models;
-using Microsoft.EntityFrameworkCore;
 
-namespace Cinematix3000.Pages.VenueMovies
+namespace Cinematix3000.Pages.Clients
 {
     public class CreateModel : PageModel
     {
@@ -22,27 +21,11 @@ namespace Cinematix3000.Pages.VenueMovies
 
         public IActionResult OnGet()
         {
-            List<Venue> venues = _context.Venues
-                .Include(v => v.Cinema).ToList();
-
-            List<object> newVenues = new List<object>();
-            foreach (Venue venue in venues)
-            {
-                newVenues.Add(new
-                {
-                    venue.ID,
-                    FullName = venue.Cinema.Name + " (Zaal: " + venue.Name + ")"
-                });
-            }
-
-            ViewData["MovieID"] = new SelectList(_context.Movies, "ID", "Title");
-            ViewData["VenueID"] = new SelectList(newVenues, "ID", "FullName");
-            
             return Page();
         }
 
         [BindProperty]
-        public VenueMovie VenueMovie { get; set; }
+        public Client Client { get; set; }
 
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
@@ -53,7 +36,7 @@ namespace Cinematix3000.Pages.VenueMovies
                 return Page();
             }
 
-            _context.VenueMovies.Add(VenueMovie);
+            _context.Clients.Add(Client);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

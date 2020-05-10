@@ -19,7 +19,6 @@ namespace Cinematix3000.Pages
 
         public void OnGet()
         {
-
         }
     }
 }

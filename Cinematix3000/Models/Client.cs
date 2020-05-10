@@ -20,6 +20,15 @@ namespace Cinematix3000.Models
         [Display(Name = "Geboortedatum")]
         public string BirthDate { get; set; }
 
+        public string FullName()
+        {
+            return FirstName + " " + LastName;
+        }
+        public override string ToString()
+        {
+            return FullName();
+        }
+
         [Display(Name = "Reserveringen")]
         public ICollection<Reservation> Reservations { get; set; }
     }

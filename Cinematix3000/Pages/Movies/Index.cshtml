@@ -25,10 +25,10 @@
             <th>
                 @Html.DisplayNameFor(model => model.Movies[0].Description)
             </th>
-            <th>
+            <th style="text-align:right;">
                 @Html.DisplayNameFor(model => model.Movies[0].Runtime)
             </th>
-            <th></th>
+            <th style="width:16rem;text-align:right;"></th>
         </tr>
     </thead>
     <tbody>
@@ -47,10 +47,10 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Description)
                 </td>
-                <td>
+                <td style="text-align:right;">
                     @Html.DisplayFor(modelItem => item.Runtime)
                 </td>
-                <td>
+                <td style="width:16rem;text-align:right;">
                     <a asp-page="./Edit" asp-route-id="@item.ID">Aanpassen</a> |
                     <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
                     <a asp-page="./Delete" asp-route-id="@item.ID">Verwijderen</a>

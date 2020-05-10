@@ -8,7 +8,6 @@
 <h1>@ViewData["Title"]</h1>
 
 <div>
-    <h4>VenueMovie</h4>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
@@ -44,7 +43,10 @@
                 {
                     <tr>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Client.FirstName) @Html.DisplayFor(modelItem => item.Client.LastName)
+                            @{
+                                string fullName = item.Client.FullName();
+                            }
+                            <a asp-page="/Clients/Details" asp-route-id="@item.Client.ID">@Html.DisplayFor(modelItem => fullName)</a>
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.SeatNumber)

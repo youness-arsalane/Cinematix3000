@@ -2,14 +2,13 @@
 @model Cinematix3000.Pages.Reservations.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
-    Layout = "~/Pages/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Reserveringen";
 }
 
-<h1>Index</h1>
+<h1>@ViewData["Title"]</h1>
 
 <p>
-    <a asp-page="Create">Create New</a>
+    <a asp-page="Create">Nieuwe toevoegen</a>
 </p>
 <table class="table">
     <thead>
@@ -23,31 +22,42 @@
             <th>
                 @Html.DisplayNameFor(model => model.Reservation[0].SeatNumber)
             </th>
-            <th>
+            <th style="text-align:right;">
                 @Html.DisplayNameFor(model => model.Reservation[0].Price)
             </th>
-            <th></th>
+            <th style="width:16rem;text-align:right;"></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model.Reservation) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Client.FirstName)
+                @{ 
+                    string fullName = item.Client.FullName();
+                }
+                <a asp-page="/Clients/Details" asp-route-id="@item.Client.ID">@Html.DisplayFor(modelItem => fullName)</a>
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.VenueMovie.ID)
+                <a asp-page="/VenueMovies/Details" asp-route-id="@item.VenueMovie.ID">
+                    @Html.DisplayFor(modelItem => item.VenueMovie.ID)
+                </a>
+                (Zaal: <a asp-page="/Venues/Details" asp-route-id="@item.VenueMovie.Venue.ID">@Html.DisplayFor(modelItem => item.VenueMovie.Venue.ID)</a>,
+                Film: <a asp-page="/Movies/Details" asp-route-id="@item.VenueMovie.Movie.ID">@Html.DisplayFor(modelItem => item.VenueMovie.Movie.Title)</a>,
+                @{
+                    string startDateTime = item.VenueMovie.StartDateTime.ToShortDateString() + " om " + item.VenueMovie.StartDateTime.ToShortTimeString();
+                }
+                Datum en tijd: @Html.DisplayFor(modelItem => startDateTime))
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.SeatNumber)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
+            <td style="text-align:right;">
+                &euro; @Html.DisplayFor(modelItem => item.Price)
             </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
+            <td style="width:16rem;text-align:right;">
+                <a asp-page="./Edit" asp-route-id="@item.ID">Aanpassen</a> |
                 <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+                <a asp-page="./Delete" asp-route-id="@item.ID">Verwijderen</a>
             </td>
         </tr>
 }
